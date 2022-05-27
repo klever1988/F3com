@@ -1,0 +1,24 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main # Changing the branch here would also work
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
+      - run: |
+          composer update nothing
+          cd content && git fetch && git merge origin/master
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "f3c" #Must be unique in Heroku
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          branch: "main"

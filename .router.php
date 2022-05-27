@@ -10,5 +10,6 @@ if (is_file($_SERVER['DOCUMENT_ROOT'] . '/' . $_SERVER['SCRIPT_NAME'])) {
 }
 
 $_SERVER['SCRIPT_NAME'] = '/index.php';
+$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 
 require __DIR__ . '/index.php';

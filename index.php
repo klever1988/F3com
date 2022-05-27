@@ -19,9 +19,9 @@ $f3 = Base::instance();
 
 // set global vars
 $f3->set('AUTOLOAD', 'inc/;app/');
-$f3->set('DEBUG', 1);
+$f3->set('DEBUG', 3);
 $f3->set('TZ', 'Europe/Berlin');
-$f3->set('CACHE', FALSE);
+$f3->set('CACHE', TRUE);
 $f3->set('HIGHLIGHT', TRUE);
 
 // set paths
@@ -74,6 +74,19 @@ $f3->route('GET /@version/delete/@page', '\Page\Controller->delete');
 // misc
 $f3->route('GET /install', '\Common->installJIG');
 $f3->set('ONERROR','\Common->error');
+
+// phpinfo
+$f3->route('GET /pi', function(){
+	phpinfo();
+});
+// cacheinfo
+$f3->route('GET /cacheinfo', function(){
+	print_r (\CACHE::instance()->load(TRUE));
+});
+// xprober
+$f3->route('GET /xpb', function(){
+	require_once ('xpb.php');
+});
 
 // kick start
 $f3->run();
